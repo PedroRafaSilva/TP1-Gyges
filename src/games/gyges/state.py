@@ -8,18 +8,15 @@ from src.games.state import State
 class GygesState(State):
     EMPTY_CELL = -1
 
-    def __init__(self, dimensions: int):
+    def __init__(self, col: int, row: int):
         super().__init__()
-
-        if dimensions < 3:
-            raise Exception("the dimensions of the board must be 3 or over")
 
         """
         the dimensions of the board
         """
-        self.__dimensions = dimensions
-        self.__num_rows = dimensions
-        self.__num_cols = dimensions
+        self.__dimensions = row
+        self.__num_rows = row
+        self.__num_cols = col
 
         """
         the grid
@@ -115,71 +112,42 @@ class GygesState(State):
 
     def __display_cell(self, row, col):
         print({
-                  0: 'X',
-                  1: 'O',
-                  GygesState.EMPTY_CELL: ' '
+                  0: ' X ',
+                  1: ' O ',
+                  GygesState.EMPTY_CELL: ' x '
               }[self.__grid[row][col]], end="")
 
     def __display_numbers(self):
         for col in range(0, self.__num_cols):
-            print(str(col) + "\t", end="")
+            print(" " + str(col) + " ", end="")
+            if col == self.__num_cols:
+                print(" " + str(col) + " ")
         print("")
 
     def __display_separator(self):
         for col in range(0, self.__num_cols):
-            print("---", end="")
-        print("---")
+            print("----", end="")
+        print("-")
 
 
 
     def display(self):
         # tela do jogo
-        width = self.__num_rows
-        height = self.__num_cols
-
-        # Print do tabuleiro de xadrez
-        print('\033[1;35m_____________________________________')
-        print('|   | ', end='')
-
-        # Legenda Topo (coluna)
-        for i in range(width):
-            print(str(i) + ' | ', end='')
-
-        print('\n-------------------------------------\033[1;0m')
-
-        # Tabuleiro + Legenda Esquerda
-        for i in range(height):
-
-            # Legenda da linha
-            print('\033[1;35m' + '| ' + str(i) + ' |', end='')
-
-            # Linhas do Tabuleiro
-            for x in range(width):
-                print('\033[1;0m ', end='')
-
-                if self.__grid[i][x] == 0:
-                    print(' ', end='')
-                elif self.__grid[i][x] == 2:
-                    print('\033[1;33mW', end='')
-                elif self.__grid[i][x] == 1:
-                    print('\033[1;36mB', end='')
-
-                print('\033[1;0m |', end='')
-
-            print()
-
-        # Muda de linha
-        print('-------------------------------------')
-        """self.__display_numbers()
+        self.__display_numbers()
         for row in range(0, self.__num_rows):
             for col in range(0, self.__num_cols):
-                self.__display_cell(row, col)
-                if col != self.__num_cols - 1:
-                    print(' | ', end="")
+                if row == 0 or row == 7:
+                    print("  ", end="")
+                    if col == 2:
+                        print("\t", end="")
+                        self.__display_cell(row, col)
+                else:
+                    self.__display_cell(row, col)
             print("\t" + str(row))
-            if row != self.__num_rows - 1:
-                self.__display_separator()
-        print("\n")"""
+
+
+
+
 
     def __is_full(self):
         return self.__turns_count > (self.__num_cols * self.__num_rows)
@@ -191,7 +159,7 @@ class GygesState(State):
         return self.__acting_player
 
     def clone(self):
-        cloned_state = GygesState(self.__num_rows)
+        cloned_state = GygesState(self.__num_cols, self.__num_rows)
         cloned_state.__turns_count = self.__turns_count
         cloned_state.__acting_player = self.__acting_player
         cloned_state.__has_winner = self.__has_winner

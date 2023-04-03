@@ -24,12 +24,12 @@ def main():
 
     tictactoe_simulations = [
          # uncomment to play as human
-        #{
-        #   "name": "TicTacToe - Human VS Random",
-        #    "player1": HumanGygesPlayer("Human"),
-        #    "player2": RandomGygesPlayer("Random")
-        #},
         {
+           "name": "TicTacToe - Human VS Random",
+            "player1": HumanGygesPlayer("Human"),
+            "player2": HumanGygesPlayer("Random")
+        },
+        """"{
             "name": "TicTacToe - Random VS Random",
             "player1": RandomGygesPlayer("Random 1"),
             "player2": RandomGygesPlayer("Random 2")
@@ -48,7 +48,7 @@ def main():
             "name": "TicTacToe - Minimax VS Greedy",
             "player1": MinimaxGygesPlayer("Minimax"),
             "player2": GreedyGygesPlayer("Greedy")
-        }]
+        }"""]
 
     for sim in tictactoe_simulations:
         run_simulation(sim["name"], GygesSimulator(sim["player1"], sim["player2"]), num_iterations)
