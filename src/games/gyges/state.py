@@ -4,6 +4,19 @@ from src.games.gyges.action import GygesAction
 from src.games.gyges.result import GygesResult
 from src.games.state import State
 
+class color:
+   PURPLE = '\033[1;35;48m'
+   CYAN = '\033[1;36;48m'
+   BOLD = '\033[1;37;48m'
+   BLUE = '\033[1;34;48m'
+   GREEN = '\033[1;32;48m'
+   YELLOW = '\033[1;33;48m'
+   RED = '\033[1;31;48m'
+   BLACK = '\033[1;30;48m'
+   UNDERLINE = '\033[4;37;48m'
+   END = '\033[1;37;0m'
+
+
 
 class GygesState(State):
     EMPTY_CELL = -1
@@ -55,22 +68,6 @@ class GygesState(State):
                         self.__grid[row + 2][col] == player:
                     return True
 
-        # check upward diagonal
-        for row in range(2, self.__num_rows):
-            for col in range(0, self.__num_cols - 2):
-                if self.__grid[row][col] == player and \
-                        self.__grid[row - 1][col + 1] == player and \
-                        self.__grid[row - 2][col + 2] == player:
-                    return True
-
-        # check downward diagonal
-        for row in range(0, self.__num_rows - 2):
-            for col in range(0, self.__num_cols - 2):
-                if self.__grid[row][col] == player and \
-                        self.__grid[row + 1][col + 1] == player and \
-                        self.__grid[row + 2][col + 2] == player:
-                    return True
-
         return False
 
     def get_grid(self):
@@ -112,17 +109,20 @@ class GygesState(State):
 
     def __display_cell(self, row, col):
         print({
-                  0: ' X ',
-                  1: ' O ',
-                  GygesState.EMPTY_CELL: ' x '
+                  0: color.RED + '| X ' + color.END,
+                  1: color.GREEN + '| 1 ' + color.END,
+                  2: color.GREEN + '| 2 ' + color.END,
+                  3: color.GREEN + '| 3 ' + color.END,
+                  GygesState.EMPTY_CELL: '| _ '
               }[self.__grid[row][col]], end="")
 
     def __display_numbers(self):
+        print(color.PURPLE + "|   ", end="")
         for col in range(0, self.__num_cols):
-            print(" " + str(col) + " ", end="")
+            print("| " + str(col) + " ", end="")
             if col == self.__num_cols:
-                print(" " + str(col) + " ")
-        print("")
+                print(str(col) + " | ")
+        print("|   |" + color.END)
 
     def __display_separator(self):
         for col in range(0, self.__num_cols):
@@ -135,19 +135,43 @@ class GygesState(State):
         # tela do jogo
         self.__display_numbers()
         for row in range(0, self.__num_rows):
+            print(color.PURPLE + "| " + str(row) + " "  + color.END, end="")
             for col in range(0, self.__num_cols):
                 if row == 0 or row == 7:
-                    print("  ", end="")
+                    if col == 0:
+                        print(color.YELLOW + "| ", end="")
+
+                    print("__", end="")
                     if col == 2:
-                        print("\t", end="")
+                        print("__", end="")
                         self.__display_cell(row, col)
+                        print("|__", end="")
+
+                    if col == 5:
+                        print(" " + color.END, end="")
                 else:
                     self.__display_cell(row, col)
-            print("\t" + str(row))
+            print(color.PURPLE + "| " + str(row) + " |" + color.END)
+        self.__display_numbers()
 
-
-
-
+    """ # Board Inicial
+    - A - B - C - D - E - F -
+    __________| w |__________ A
+    | _ | 2 | 3 | 4 | 5 | 6 | B 
+    | 1 | 2 | 3 | 4 | 5 | 6 | C 
+    | 1 | 2 | 3 | 4 | 5 | 6 | D
+    | 1 | 2 | 3 | 4 | 5 | 6 | E
+    | 1 | 2 | 3 | 4 | 5 | 6 | F
+    | 1 | 2 | 3 | 4 | 5 | 6 | G
+    __________| w |__________ H
+    
+    nivel 1 -> 1
+    nivel 2 -> 2
+    nivel 3 -> 3
+    vazio -> _
+    impossible -> X
+    
+    """
 
     def __is_full(self):
         return self.__turns_count > (self.__num_cols * self.__num_rows)

@@ -55,3 +55,53 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    """
+    As casas vencedoras deverão ser definidas no array como colunas 2 e 3 das linhas 0 e 7 pois como a IA só se move 
+    verticalmente e horizontalmente é masi simples fazer as verificações do win state 
+    
+    EX:
+    Jogada linha 2 coluna 2 -> linha 0 coluna 2
+    ou
+    Jogada linha 2 coluna 3 -> linha 0 coluna 3
+    Se fosse no meio seria basicamente coluna 2.5, o que seria mais dificil para calcular
+    
+    Para mostrar podem na mesma mostrar apenas uma casa, seria só no backend que seria 2 colunas nas linhas de win
+    Para as casas que não pode ir, iplementar uma block list ou algo semelhante, que ao geras as moves veerifica contra 
+    a block list se pode ou não fazer essa move. Usar algo semelhante para a cena de não se poder mover para as casas 
+    antigas
+    
+          BACKEND
+        
+     0  1  2  3  4  5 
+           x  x       	0
+     x  x  x  x  x  x 	1
+     x  x  x  x  x  x 	2
+     x  x  x  x  x  x 	3
+     x  x  x  x  x  x 	4
+     x  x  x  x  x  x 	5
+     x  x  x  x  x  x 	6
+           x  x      	7
+           
+          FRONTEND
+           
+     0  1  2  3  4  5 
+             x       	0
+     x  x  x  x  x  x 	1
+     x  x  x  x  x  x 	2
+     x  x  x  x  x  x 	3
+     x  x  x  x  x  x 	4
+     x  x  x  x  x  x 	5
+     x  x  x  x  x  x 	6
+             x       	7
+      	 
+    Para a IA remover os moves obliquos e mudar a cena para verificar o win state
+    Tmb a cena de blocked moves
+    
+    Random não é preciso alterar nada :)
+    Para as outras alterar para ficar o mais perto possivel das casas de win (acho, não sei bem as regras)
+    
+    Alterar a cena para a IA saber quasi sao as pecas dela
+    
+    """
+
