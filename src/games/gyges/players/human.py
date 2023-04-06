@@ -9,7 +9,7 @@ class HumanGygesPlayer(GygesPlayer):
         super().__init__(name)
 
     def get_action(self, state: GygesState):
-        state.display()
+        state.display2()
         while True:
             # noinspection PyBroadException
             try:

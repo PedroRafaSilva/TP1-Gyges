@@ -1,6 +1,7 @@
 from typing import Optional
 
 from src.games.gyges.action import GygesAction
+from src.games.gyges.board import Board
 from src.games.gyges.result import GygesResult
 from src.games.state import State
 
@@ -15,8 +16,6 @@ class color:
    BLACK = '\033[1;30;48m'
    UNDERLINE = '\033[4;37;48m'
    END = '\033[1;37;0m'
-
-
 
 class GygesState(State):
     EMPTY_CELL = -1
@@ -172,6 +171,11 @@ class GygesState(State):
     impossible -> X
     
     """
+
+    def display2(self):
+        board = Board()
+        board.init_board()
+        board.print_board()
 
     def __is_full(self):
         return self.__turns_count > (self.__num_cols * self.__num_rows)
