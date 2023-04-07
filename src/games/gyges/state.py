@@ -1,7 +1,9 @@
 from typing import Optional
 
+from games.gyges.board import Board
+from games.gyges.piece import Piece
 from src.games.gyges.action import GygesAction
-from src.games.gyges.board import Board
+
 from src.games.gyges.result import GygesResult
 from src.games.state import State
 
@@ -22,6 +24,10 @@ class GygesState(State):
 
     def __init__(self, col: int, row: int):
         super().__init__()
+
+        # As peças do jogo
+        self.__pieces = [Piece("L1"), Piece("L1"), Piece("L2"), Piece("L2"), Piece("L3"), Piece("L3"),
+                         Piece("L1"), Piece("L1"), Piece("L2"), Piece("L2"), Piece("L3"), Piece("L3")]
 
         """
         the dimensions of the board
@@ -49,6 +55,17 @@ class GygesState(State):
         determine if a winner was found already 
         """
         self.__has_winner = False
+
+    # Retorna o nº do turno
+    def get_turn(self):
+        return self.__turns_count
+
+    # Verifica se o jogo já começou
+    # O jogo só começa quando todas as peças estão no tabuleiro
+    def start_game(self):
+        if self.__pieces:
+            return False
+        return True
 
     def __check_winner(self, player):
         # check for 3 acroos
@@ -96,7 +113,10 @@ class GygesState(State):
         col = action.get_col()
         row = action.get_row()
 
-        self.__grid[row][col] = self.__acting_player
+        # Enquanto o jogo não começa, vai-se colocando as peças no tabuleiro
+        if not self.start_game():
+            self.__grid[row][col] = self.__pieces[0].get_piece_type()
+            self.__pieces.pop(0)
 
         # determine if there is a winner
         self.__has_winner = self.__check_winner(self.__acting_player)
@@ -108,10 +128,9 @@ class GygesState(State):
 
     def __display_cell(self, row, col):
         print({
-                  0: color.RED + '| X ' + color.END,
-                  1: color.GREEN + '| 1 ' + color.END,
-                  2: color.GREEN + '| 2 ' + color.END,
-                  3: color.GREEN + '| 3 ' + color.END,
+                  "L1": color.GREEN + '| 1 ' + color.END,
+                  "L2": color.BLUE + '| 2 ' + color.END,
+                  "L3": color.RED + '| 3 ' + color.END,
                   GygesState.EMPTY_CELL: '| _ '
               }[self.__grid[row][col]], end="")
 
@@ -127,8 +146,6 @@ class GygesState(State):
         for col in range(0, self.__num_cols):
             print("----", end="")
         print("-")
-
-
 
     def display(self):
         # tela do jogo
@@ -152,6 +169,10 @@ class GygesState(State):
                     self.__display_cell(row, col)
             print(color.PURPLE + "| " + str(row) + " |" + color.END)
         self.__display_numbers()
+
+        # Display da peça a colocar no tabuleiro
+        if self.__turns_count < 12:
+            print("A peça a jogar: " + self.__pieces[self.__turns_count - 1].get_piece_type())
 
     """ # Board Inicial
     - A - B - C - D - E - F -

@@ -46,6 +46,7 @@ class Player(ABC):
     Method that returns an action for a certain game state
     :param state: the current game state
     """
+
     @abstractmethod
     def get_action(self, state):
         pass

@@ -9,12 +9,26 @@ class HumanGygesPlayer(GygesPlayer):
         super().__init__(name)
 
     def get_action(self, state: GygesState):
-        state.display2()
+        state.display()
         while True:
             # noinspection PyBroadException
             try:
-                return GygesAction(int(input(f"Player {state.get_acting_player()}, choose a column: ")),
+                # Se as peças estiverem todas colocadas
+                if state.get_turn() > 12:
+                    return GygesAction(int(input(f"Player {state.get_acting_player()}, choose a column: ")),
                                        int(input(f"Player {state.get_acting_player()}, choose a row: ")))
+                else:
+                    # O jogador 0 irá ficar com a parte de cima do tabuleiro
+                    if state.get_acting_player() == 0:
+                        return GygesAction(int(input(
+                            f"Player {state.get_acting_player()}, choose the column where you want to put this piece: ")),
+                                           1)
+                    else:
+                        # O jogador 1 irá ficar com a parte de baixo do tabuleiro
+                        return GygesAction(int(input(
+                            f"Player {state.get_acting_player()}, choose the column where you want to put this piece: ")),
+                                           6)
+
             except Exception:
                 continue
 
