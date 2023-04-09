@@ -1,23 +1,25 @@
 from typing import Optional
 
+
 from games.gyges.board import Board
 from games.gyges.piece import Piece
 from src.games.gyges.action import GygesAction
-
 from src.games.gyges.result import GygesResult
 from src.games.state import State
 
+
 class color:
-   PURPLE = '\033[1;35;48m'
-   CYAN = '\033[1;36;48m'
-   BOLD = '\033[1;37;48m'
-   BLUE = '\033[1;34;48m'
-   GREEN = '\033[1;32;48m'
-   YELLOW = '\033[1;33;48m'
-   RED = '\033[1;31;48m'
-   BLACK = '\033[1;30;48m'
-   UNDERLINE = '\033[4;37;48m'
-   END = '\033[1;37;0m'
+    PURPLE = '\033[1;35;48m'
+    CYAN = '\033[1;36;48m'
+    BOLD = '\033[1;37;48m'
+    BLUE = '\033[1;34;48m'
+    GREEN = '\033[1;32;48m'
+    YELLOW = '\033[1;33;48m'
+    RED = '\033[1;31;48m'
+    BLACK = '\033[1;30;48m'
+    UNDERLINE = '\033[4;37;48m'
+    END = '\033[1;37;0m'
+
 
 class GygesState(State):
     EMPTY_CELL = -1
@@ -26,8 +28,8 @@ class GygesState(State):
         super().__init__()
 
         # As peças do jogo
-        self.__pieces = [Piece("L1"), Piece("L1"), Piece("L2"), Piece("L2"), Piece("L3"), Piece("L3"),
-                         Piece("L1"), Piece("L1"), Piece("L2"), Piece("L2"), Piece("L3"), Piece("L3")]
+        self.__pieces = [Piece(1), Piece(1), Piece(2), Piece(2), Piece(3), Piece(3),
+                         Piece(1), Piece(1), Piece(2), Piece(2), Piece(3), Piece(3)]
 
         """
         the dimensions of the board
@@ -56,6 +58,19 @@ class GygesState(State):
         """
         self.__has_winner = False
 
+
+    def get_closest_piece(self):
+        for row in range(0, self.__num_rows):
+            for col in range(0,self.__num_cols):
+                if self.__grid[row][col] != -1:
+                    return row
+
+    def get_away_piece(self):
+        for row in reversed(range(0, self.__num_rows)):
+            for col in reversed(range(0, self.__num_cols)):
+                if self.__grid[row][col] != -1:
+                    return row
+
     # Retorna o nº do turno
     def get_turn(self):
         return self.__turns_count
@@ -68,23 +83,9 @@ class GygesState(State):
         return True
 
     def __check_winner(self, player):
-        # check for 3 acroos
-        for row in range(0, self.__num_rows):
-            for col in range(0, self.__num_cols - 2):
-                if self.__grid[row][col] == player and \
-                        self.__grid[row][col + 1] == player and \
-                        self.__grid[row][col + 2] == player:
-                    return True
-
-        # check for 3 up and down
-        for row in range(0, self.__num_rows - 2):
-            for col in range(0, self.__num_cols):
-                if self.__grid[row][col] == player and \
-                        self.__grid[row + 1][col] == player and \
-                        self.__grid[row + 2][col] == player:
-                    return True
-
-        return False
+       if self.__grid[7][2] != -1 or self.__grid[0][2] != -1:
+            return True
+       return False
 
     def get_grid(self):
         return self.__grid
@@ -93,18 +94,22 @@ class GygesState(State):
         return 2
 
     def validate_action(self, action: GygesAction) -> bool:
-        col = action.get_col()
-        row = action.get_row()
+        if not self.start_game():
+            col = action.get_col()
+            row = action.get_row()
+        else:
+            # Verifica a nova posição da peça
+            col = action.get_col()[1]
+            row = action.get_col()[0]
 
         # valid column
-        if col < 0 or col >= self.__num_cols:
+        if col < 0 or col > self.__num_cols:
             return False
 
-        if row < 0 or row >= self.__num_rows:
+        if row < 0 or row > self.__num_rows:
             return False
 
-        # full column
-        if self.__grid[row][col] != GygesState.EMPTY_CELL:
+        if self.__grid[row][col] != GygesState.EMPTY_CELL and not self.start_game():
             return False
 
         return True
@@ -117,6 +122,10 @@ class GygesState(State):
         if not self.start_game():
             self.__grid[row][col] = self.__pieces[0].get_piece_type()
             self.__pieces.pop(0)
+        else:
+            # Coloca a peça na sua nova posição
+            self.__grid[col[0]][col[1]] = self.__grid[row[0]][row[1]]
+            self.__grid[row[0]][row[1]] = self.EMPTY_CELL
 
         # determine if there is a winner
         self.__has_winner = self.__check_winner(self.__acting_player)
@@ -128,9 +137,9 @@ class GygesState(State):
 
     def __display_cell(self, row, col):
         print({
-                  "L1": color.GREEN + '| 1 ' + color.END,
-                  "L2": color.BLUE + '| 2 ' + color.END,
-                  "L3": color.RED + '| 3 ' + color.END,
+                  1: color.GREEN + '| 1 ' + color.END,
+                  2: color.BLUE + '| 2 ' + color.END,
+                  3: color.RED + '| 3 ' + color.END,
                   GygesState.EMPTY_CELL: '| _ '
               }[self.__grid[row][col]], end="")
 
@@ -172,7 +181,7 @@ class GygesState(State):
 
         # Display da peça a colocar no tabuleiro
         if self.__turns_count < 12:
-            print("A peça a jogar: " + self.__pieces[self.__turns_count - 1].get_piece_type())
+            print("Piece type: " + str(self.__pieces[self.__turns_count - 1].get_piece_type()))
 
     """ # Board Inicial
     - A - B - C - D - E - F -
@@ -219,9 +228,10 @@ class GygesState(State):
 
     def get_result(self, pos) -> Optional[GygesResult]:
         if self.__has_winner:
-            return GygesResult.LOOSE if pos == self.__acting_player else GygesResult.WIN
-        if self.__is_full():
-            return GygesResult.DRAW
+            if self.__grid[0][2] != -1:
+                return GygesResult.LOOSE
+            if self.__grid[7][2] != -1:
+                return GygesResult.WIN
         return None
 
     def get_num_rows(self):

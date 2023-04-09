@@ -1,9 +1,6 @@
 class GygesAction:
 
-    __col: int
-    __line: int
-
-    def __init__(self, col: int, row: int):
+    def __init__(self, row, col):
         self.__col = col
         self.__row = row
 
