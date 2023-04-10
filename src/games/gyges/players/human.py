@@ -43,11 +43,12 @@ class HumanGygesPlayer(GygesPlayer):
                     moves = state.get_grid()[row][col]  # O nº de movimentos é igual ao tipo de peça escolhido
 
                     while moves != 0:  # Enquanto houver movimentos
+                        can_move = False
                         print("\nMovimentos")
                         if state.get_acting_player() == 0:  # Apenas o jogador 0 pode mover a peça para baixo
                             # Se a linha abaixo da peça for diferente da coluna 7 e estiver vazia ou só restar 1 movimento
                             # Ou se a peça estiver nas colunas á beira da casa vencedora
-                            if row + 1 != 7 and (state.get_grid()[row + 1][col] == -1 or moves == 1) or row + 1 == 7 and 2 <= col <= 3:
+                            if row + 1 != 7 and (state.get_grid()[row + 1][col] == -1 or moves == 1) or (row + 1 == 7 and 2 <= col <= 3 and moves == 1):
                                 print("1 - Para baixo")
                                 ative1 = True
                                 can_move = True
@@ -69,7 +70,7 @@ class HumanGygesPlayer(GygesPlayer):
                         if state.get_acting_player() == 1:  # Apenas o jogador 1 pode mover a peça para cima
                             # Se a linha acima da peça for diferente da coluna 0 e estiver vazia ou só restar 1 movimento
                             # Ou se a peça estiver nas colunas á beira da casa vencedora
-                            if op != 1 and row - 1 != 0 and (state.get_grid()[row - 1][col] == -1 or moves == 1) or row - 1 == 0 and 2 <= col <= 3:
+                            if op != 1 and row - 1 != 0 and (state.get_grid()[row - 1][col] == -1 or moves == 1) or (row - 1 == 0 and 2 <= col <= 3 and moves == 1):
                                 print("4 - Para cima")
                                 can_move = True
                                 ative4 = True

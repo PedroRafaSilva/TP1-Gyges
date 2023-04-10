@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="145c57ee-e2dd-4ba3-b11c-8fe5eaccda7e" name="Changes" comment="Human vs Human feito!">
+    <list default="true" id="145c57ee-e2dd-4ba3-b11c-8fe5eaccda7e" name="Changes" comment="Results corrected!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/games/gyges/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/gyges/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/games/gyges/players/Random.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/gyges/players/Random.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/games/gyges/players/human.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/gyges/players/human.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/games/gyges/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/gyges/state.py" afterDir="false" />
     </list>
     <list id="e235cd62-130e-4b9a-b77c-03cd37b33e5a" name="Changes by c" comment="Outras alterações feitas!!!!!!!!!" />
@@ -43,7 +45,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Pedro/PycharmProjects/ai-solve-games",
+    "last_opened_file_path": "C:/Users/Pedro/PycharmProjects/TP1-Gyges-2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -148,7 +150,8 @@
       <workItem from="1681038003504" duration="1527000" />
       <workItem from="1681041414363" duration="7926000" />
       <workItem from="1681063343439" duration="5081000" />
-      <workItem from="1681116835729" duration="12248000" />
+      <workItem from="1681116835729" duration="19003000" />
+      <workItem from="1681137336641" duration="613000" />
     </task>
     <task id="LOCAL-00001" summary="Alterações feitas!!!!!!">
       <created>1680552832461</created>
@@ -178,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681068616169</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Results corrected!">
+      <created>1681130902795</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681130902795</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,7 +210,8 @@
     <MESSAGE value="Outras alterações feitas!!!!!!!!!" />
     <MESSAGE value="Colocação das peças feito!" />
     <MESSAGE value="Human vs Human feito!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Human vs Human feito!" />
+    <MESSAGE value="Results corrected!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Results corrected!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -214,7 +225,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/TP1_Gyges_2$main.coverage" NAME="main Coverage Results" MODIFIED="1681130059858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TP1_Gyges_2$main.coverage" NAME="main Coverage Results" MODIFIED="1681137936771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TP1_Gyges$main.coverage" NAME="main Coverage Results" MODIFIED="1680806043191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TP1_Gyges$board.coverage" NAME="board Coverage Results" MODIFIED="1680804988052" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/games/gyges" />
     <SUITE FILE_PATH="coverage/TP1_Gyges$test.coverage" NAME="test Coverage Results" MODIFIED="1680805567249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/games/gyges" />

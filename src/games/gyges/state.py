@@ -127,6 +127,7 @@ class GygesState(State):
             self.__grid[col[0]][col[1]] = self.__grid[row[0]][row[1]]
             self.__grid[row[0]][row[1]] = self.EMPTY_CELL
 
+
         # determine if there is a winner
         self.__has_winner = self.__check_winner(self.__acting_player)
 
@@ -211,7 +212,7 @@ class GygesState(State):
         return self.__turns_count > (self.__num_cols * self.__num_rows)
 
     def is_finished(self) -> bool:
-        return self.__has_winner or self.__is_full()
+        return self.__has_winner
 
     def get_acting_player(self) -> int:
         return self.__acting_player
@@ -228,8 +229,7 @@ class GygesState(State):
 
     def get_result(self, pos) -> Optional[GygesResult]:
         if self.__has_winner:
-            return GygesResult.WIN if pos == self.__acting_player else GygesResult.LOOSE
-        return None
+            return GygesResult.LOOSE if pos == self.__acting_player else GygesResult.WIN
 
     def get_num_rows(self):
         return self.__num_rows
