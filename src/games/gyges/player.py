@@ -14,6 +14,7 @@ class GygesPlayer(Player, ABC):
         """
         self.__stats = {}
         for c4res in GygesResult:
+            print(c4res)
             self.__stats[c4res] = 0
 
         """

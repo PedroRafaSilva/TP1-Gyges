@@ -6,13 +6,13 @@ from src.games.gyges.players.minimax import MinimaxGygesPlayer
 from src.games.gyges.players.Random import RandomGygesPlayer
 from src.games.gyges.simulator import GygesSimulator
 
+
 def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     print(f"----- {desc} -----")
 
     for i in range(0, iterations):
-        simulator.change_player_positions()
+        # simulator.change_player_positions()
         simulator.run_simulation()
-
     print("Results for the game:")
     simulator.print_stats()
 
@@ -24,34 +24,22 @@ def main():
 
     gyges_simulations = [
          # uncomment to play as human
+        #{
+        #   "name": "Gyges - Human VS Human",
+        #    "player1": HumanGygesPlayer("Human 1"),
+        #    "player2": HumanGygesPlayer("Human 2")
+        #},
         {
-           "name": "Gyges - Human VS Random",
-            "player1": HumanGygesPlayer("Human"),
-            "player2": HumanGygesPlayer("Random")
-        },
-        """"{
-            "name": "Gyges - Random VS Random",
-            "player1": RandomGygesPlayer("Random 1"),
-            "player2": RandomGygesPlayer("Random 2")
-        },
-        {
-            "name": "Gyges - Greedy VS Random",
-            "player1": GreedyGygesPlayer("Greedy"),
-            "player2": RandomGygesPlayer("Random")
-        },
-        {
-            "name": "Gyges - Minimax VS Random",
-            "player1": MinimaxGygesPlayer("Minimax"),
-            "player2": RandomGygesPlayer("Random")
-        },
-        {
-            "name": "Gyges - Minimax VS Greedy",
-            "player1": MinimaxGygesPlayer("Minimax"),
-            "player2": GreedyGygesPlayer("Greedy")
-        }"""]
+            "name": "Gyges - Human VS Random",
+            "player1": HumanGygesPlayer("Human 1"),
+            "player2": RandomGygesPlayer("Human 2")
+        }
+    ]
 
     for sim in gyges_simulations:
+        print(sim)
         run_simulation(sim["name"], GygesSimulator(sim["player1"], sim["player2"]), num_iterations)
+
 
 if __name__ == "__main__":
     main()

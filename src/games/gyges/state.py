@@ -228,10 +228,7 @@ class GygesState(State):
 
     def get_result(self, pos) -> Optional[GygesResult]:
         if self.__has_winner:
-            if self.__grid[0][2] != -1:
-                return GygesResult.LOOSE
-            if self.__grid[7][2] != -1:
-                return GygesResult.WIN
+            return GygesResult.WIN if pos == self.__acting_player else GygesResult.LOOSE
         return None
 
     def get_num_rows(self):

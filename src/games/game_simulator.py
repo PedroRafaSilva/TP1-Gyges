@@ -56,10 +56,10 @@ class GameSimulator(ABC):
         - iteration 6: x,y,z (back to the initial configuration)
     """
 
-    def change_player_positions(self):
+    """def change_player_positions(self):
         self.__current_permutation += 1
         if self.__current_permutation >= len(self.__permutations):
-            self.__current_permutation = 0
+            self.__current_permutation = 0"""
 
     """
     starts a new game
