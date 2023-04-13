@@ -31,6 +31,6 @@ class GygesPlayer(Player, ABC):
         self.__num_games += 1
 
     def event_result(self, pos: int, result: GygesResult):
-        print(self.__num_games)
+        # print(self.__num_games)
         if pos == self.get_current_pos():
             self.__stats[result] += 1

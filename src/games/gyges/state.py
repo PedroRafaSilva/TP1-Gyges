@@ -1,7 +1,7 @@
 from typing import Optional
 
 
-from games.gyges.board import Board
+
 from games.gyges.piece import Piece
 from src.games.gyges.action import GygesAction
 from src.games.gyges.result import GygesResult
@@ -9,7 +9,7 @@ from src.games.state import State
 
 
 class color:
-    PURPLE = '\033[1;35;48m'
+    PINK = '\033[1;35;48m'
     CYAN = '\033[1;36;48m'
     BOLD = '\033[1;37;48m'
     BLUE = '\033[1;34;48m'
@@ -93,15 +93,17 @@ class GygesState(State):
     def get_num_players(self):
         return 2
 
+    #isto está meio inutilizado, serve só para verificar se ao colocar as peças, estas são colocadas no sítio certo.
     def validate_action(self, action: GygesAction) -> bool:
         if not self.start_game():
+            #dar valor as variaveis que vao ser usadas
             col = action.get_col()
             row = action.get_row()
         else:
             # Verifica a nova posição da peça
             col = action.get_col()[1]
             row = action.get_col()[0]
-
+        ## verificar se a posição da peça está certa
         # valid column
         if col < 0 or col > self.__num_cols:
             return False
@@ -114,7 +116,10 @@ class GygesState(State):
 
         return True
 
+
+
     def update(self, action: GygesAction):
+        #obter o valor das variaveis
         col = action.get_col()
         row = action.get_row()
 
@@ -124,7 +129,9 @@ class GygesState(State):
             self.__pieces.pop(0)
         else:
             # Coloca a peça na sua nova posição
+            # A nova posição da peça fica com a posição antiga
             self.__grid[col[0]][col[1]] = self.__grid[row[0]][row[1]]
+            # a posição antiga fica vazia
             self.__grid[row[0]][row[1]] = self.EMPTY_CELL
 
 
@@ -140,12 +147,12 @@ class GygesState(State):
         print({
                   1: color.GREEN + '| 1 ' + color.END,
                   2: color.BLUE + '| 2 ' + color.END,
-                  3: color.RED + '| 3 ' + color.END,
+                  3: color.YELLOW + '| 3 ' + color.END,
                   GygesState.EMPTY_CELL: '| _ '
               }[self.__grid[row][col]], end="")
 
     def __display_numbers(self):
-        print(color.PURPLE + "|   ", end="")
+        print(color.PINK + "|   ", end="")
         for col in range(0, self.__num_cols):
             print("| " + str(col) + " ", end="")
             if col == self.__num_cols:
@@ -161,11 +168,11 @@ class GygesState(State):
         # tela do jogo
         self.__display_numbers()
         for row in range(0, self.__num_rows):
-            print(color.PURPLE + "| " + str(row) + " "  + color.END, end="")
+            print(color.PINK + "| " + str(row) + " "  + color.END, end="")
             for col in range(0, self.__num_cols):
                 if row == 0 or row == 7:
                     if col == 0:
-                        print(color.YELLOW + "| ", end="")
+                        print(color.CYAN + "| ", end="")
 
                     print("__", end="")
                     if col == 2:
@@ -177,7 +184,7 @@ class GygesState(State):
                         print(" " + color.END, end="")
                 else:
                     self.__display_cell(row, col)
-            print(color.PURPLE + "| " + str(row) + " |" + color.END)
+            print(color.PINK + "| " + str(row) + " |" + color.END)
         self.__display_numbers()
 
         # Display da peça a colocar no tabuleiro
@@ -203,14 +210,11 @@ class GygesState(State):
     
     """
 
-    def display2(self):
-        board = Board()
-        board.init_board()
-        board.print_board()
-
     def __is_full(self):
         return self.__turns_count > (self.__num_cols * self.__num_rows)
 
+
+    #usamos para verificar se o jogo esta acabado ou não
     def is_finished(self) -> bool:
         return self.__has_winner
 
