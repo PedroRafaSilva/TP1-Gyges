@@ -38,6 +38,9 @@ class GygesState(State):
         self.__num_rows = row
         self.__num_cols = col
 
+        # Numero de jogadas sem se mover
+        self.not_move100 = 0
+
         """
         the grid
         """
@@ -103,6 +106,13 @@ class GygesState(State):
             # Verifica a nova posição da peça
             col = action.get_col()[1]
             row = action.get_col()[0]
+
+        # Se o jogador estiver bloqueado muda de jogador
+        self.not_move100 += 1
+        if self.not_move100 == 100:
+            self.not_move100 = 0
+            self.__acting_player = 1 if self.__acting_player == 0 else 0
+
         ## verificar se a posição da peça está certa
         # valid column
         if col < 0 or col > self.__num_cols:

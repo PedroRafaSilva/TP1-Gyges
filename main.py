@@ -20,7 +20,7 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
 def main():
     print("ESTG IA Games Simulator")
 
-    num_iterations = 4
+    num_iterations = int(input("Nº de interações: "))
 
     gyges_simulations = [
          # uncomment to play as human
@@ -29,16 +29,16 @@ def main():
         #    "player1": HumanGygesPlayer("Human 1"),
         #    "player2": HumanGygesPlayer("Human 2")
         #},
-        {
-            "name": "Gyges - Human VS Random",
-            "player1": HumanGygesPlayer("Human 1"),
-            "player2": RandomGygesPlayer("Random")
-        },
         #{
-        #    "name": "Gyges - Random VS Random",
-        #   "player1": RandomGygesPlayer("Random 1"),
-        #   "player2": RandomGygesPlayer("Random 2")
-        #}
+        #    "name": "Gyges - Human VS Random",
+        #    "player1": HumanGygesPlayer("Human 1"),
+        #    "player2": RandomGygesPlayer("Random")
+        #},
+        {
+            "name": "Gyges - Random VS Random",
+           "player1": RandomGygesPlayer("Random 1"),
+           "player2": RandomGygesPlayer("Random 2")
+        }
     ]
 
     for sim in gyges_simulations:

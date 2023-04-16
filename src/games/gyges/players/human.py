@@ -16,7 +16,6 @@ class HumanGygesPlayer(GygesPlayer):
             try:
                 op = row = col = 0
                 proceed = False
-                can_move = False
                 ative1 = ative2 = ative3 = ative4 = False
                 if state.get_turn() > 12:  # Se as peças estiverem todas colocadas
 
@@ -80,6 +79,7 @@ class HumanGygesPlayer(GygesPlayer):
                             print("\nNº de movimentos restantes: " + str(moves))
                             op = int(input("Quer mover esta peça para onde: "))
 
+
                             if op == 1 and ative1:  # Se a opção escolhida for 1 e esta opção estiver disponivel
                                 if row == 6 and col == 3:  # Permite o jogador aceder á casa vencedora através da col 3
                                     col -= 1
@@ -90,7 +90,7 @@ class HumanGygesPlayer(GygesPlayer):
                                 # A nova posição fica com o valor da peça e a anterior fica vazia
                                 state.get_grid()[row][col] = state.get_grid()[row - 1][col]
                                 state.get_grid()[row - 1][col] = state.EMPTY_CELL
-                                ative1 = False
+
 
                             elif op == 2 and ative2:  # Se a opção escolhida for 2 e esta opção estiver disponivel
                                 col -= 1
@@ -100,7 +100,7 @@ class HumanGygesPlayer(GygesPlayer):
                                 # A nova posição fica com o valor da peça e a anterior fica vazia
                                 state.get_grid()[row][col] = state.get_grid()[row][col + 1]
                                 state.get_grid()[row][col + 1] = state.EMPTY_CELL
-                                ative2 = False
+
 
                             elif op == 3 and ative3:  # Se a opção escolhida for 3 e esta opção estiver disponivel
                                 col += 1
@@ -110,7 +110,7 @@ class HumanGygesPlayer(GygesPlayer):
                                 # A nova posição fica com o valor da peça e a anterior fica vazia
                                 state.get_grid()[row][col] = state.get_grid()[row][col - 1]
                                 state.get_grid()[row][col - 1] = state.EMPTY_CELL
-                                ative3 = False
+
 
                             elif op == 4 and ative4:  # Se a opção escolhida for 4 e esta opção estiver disponivel
                                 if row == 1 and col == 3:  # Permite o jogador aceder á casa vencedora através da col 3
@@ -122,13 +122,14 @@ class HumanGygesPlayer(GygesPlayer):
                                 # A nova posição fica com o valor da peça e a anterior fica vazia
                                 state.get_grid()[row][col] = state.get_grid()[row + 1][col]
                                 state.get_grid()[row + 1][col] = state.EMPTY_CELL
-                                ative4 = False
+
 
                             else:  # Se for selecionada uma opção que não seja possivel
                                 moves += 1
                                 print(color.RED + "That movement is not possible!" + color.END)
 
                             moves -= 1
+                            ative1 = ative2 = ative3 = ative4 = False
 
                             if moves != 0:
                                 state.display()
