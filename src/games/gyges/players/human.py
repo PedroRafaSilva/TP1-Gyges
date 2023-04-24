@@ -25,11 +25,11 @@ class HumanGygesPlayer(GygesPlayer):
                         col = int(input("Choose the column of the piece: "))
 
                         # Se o jogador 0 escolher o campo com uma peça mais próxima dele, continua
-                        if state.get_acting_player() == 0 and row == state.get_closest_piece() and state.get_grid()[row][col] != -1:
+                        if state.get_acting_player() == 0 and row == state.get_closest_playable_row() and state.get_grid()[row][col] != -1:
                             proceed = True
 
                         # Se o jogador 1 escolher o campo com uma peça mais próxima dele, continua
-                        elif state.get_acting_player() == 1 and row == state.get_away_piece() and state.get_grid()[row][col] != -1:
+                        elif state.get_acting_player() == 1 and row == state.get_closest_playable_row() and state.get_grid()[row][col] != -1:
                             proceed = True
 
                         # Caso contrário volta a escolher a linha e a coluna da peça a jogar

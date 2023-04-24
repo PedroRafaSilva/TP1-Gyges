@@ -17,33 +17,243 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
     simulator.print_stats()
 
 
+def print_main_menu():
+    print('\033[1;m\n-------------------------------------')
+    print('--- Gyges Game                    ---')
+    print('-------------------------------------')
+    print('--- 1 - Humano vs Humano          ---')
+    print('--- 2 - Humano vs AI              ---')
+    print('--- 3 - AI vs AI                  ---')
+    print('-------------------------------------')
+    print('--- 0 - Sair                      ---')
+    print('-------------------------------------')
+
+
+def print_ai_menu():
+    print('\n-------------------------------------')
+    print('--- Seleção da IA                 ---')
+    print('-------------------------------------')
+    print('--- 1 - Random                    ---')
+    print('--- 2 - Greedy                    ---')
+    print('--- 3 - Minimax                   ---')
+    print('-------------------------------------')
+    print('--- 4 - Voltar Atrás              ---')
+    print('--- 0 - Sair                      ---')
+    print('-------------------------------------')
+
+
 def main():
-    print("ESTG IA Games Simulator")
+    opc = 1
+    gyges_simulations = []
+    num_iterations = 0
 
-    num_iterations = int(input("Nº de interações: "))
+    while opc != 0:
+        print("\n\nESTG IA Games Simulator")
 
-    gyges_simulations = [
-         # uncomment to play as human
-        #{
-        #   "name": "Gyges - Human VS Human",
-        #    "player1": HumanGygesPlayer("Human 1"),
-        #    "player2": HumanGygesPlayer("Human 2")
-        #},
-        #{
-        #    "name": "Gyges - Human VS Random",
-        #    "player1": HumanGygesPlayer("Human 1"),
-        #    "player2": RandomGygesPlayer("Random")
-        #},
-        {
-            "name": "Gyges - Random VS Random",
-           "player1": RandomGygesPlayer("Random 1"),
-           "player2": RandomGygesPlayer("Random 2")
-        }
-    ]
+        print_main_menu()
 
-    for sim in gyges_simulations:
+        print('Escolha uma opção: ', end='')
+        opc = int(input())
 
-        run_simulation(sim["name"], GygesSimulator(sim["player1"], sim["player2"]), num_iterations)
+        if opc == 1:
+            num_iterations = int(input("\nNº de interações: "))
+            gyges_simulations = [
+                {
+                    "name": "Gyges - Human VS Human",
+                    "player1": HumanGygesPlayer("Human 1"),
+                    "player2": HumanGygesPlayer("Human 2")
+                }
+            ]
+        if opc == 2:
+
+            print_ai_menu()
+
+            print('Escolha uma opção: ', end='')
+            opc = int(input())
+
+            if opc == 1:
+                num_iterations = int(input("\nNº de interações: "))
+                gyges_simulations = [
+                    {
+                        "name": "Gyges - Human VS Random",
+                        "player1": HumanGygesPlayer("Human 1"),
+                        "player2": RandomGygesPlayer("Random 1")
+                    }
+                ]
+
+            elif opc == 2:
+                num_iterations = int(input("\nNº de interações: "))
+                gyges_simulations = [
+                    {
+                        "name": "Gyges - Human VS Greedy",
+                        "player1": HumanGygesPlayer("Human 1"),
+                        "player2": GreedyGygesPlayer("Greedy 1")
+                    }
+                ]
+
+            elif opc == 3:
+                num_iterations = int(input("\nNº de interações: "))
+                gyges_simulations = [
+                    {
+                        "name": "Gyges - Human VS Minimax",
+                        "player1": HumanGygesPlayer("Human 1"),
+                        "player2": MinimaxGygesPlayer("Minimax 1")
+                    }
+                ]
+
+            elif opc == 4:
+                print()
+
+        if opc == 3:
+
+            print_ai_menu()
+
+            print('Escolha uma opção: ', end='')
+            opc = int(input())
+
+            if opc == 1:
+
+                print("\nRandom")
+                print_ai_menu()
+
+                print('Escolha uma opção: ', end='')
+                opc = int(input())
+
+                if opc == 1:
+                    num_iterations = int(input("\nNº de interações: "))
+                    gyges_simulations = [
+                        {
+                            "name": "Gyges - Random VS Random",
+                            "player1": RandomGygesPlayer("Random 1"),
+                            "player2": RandomGygesPlayer("Random 2")
+                        }
+                    ]
+
+                elif opc == 2:
+                    num_iterations = int(input("\nNº de interações: "))
+                    gyges_simulations = [
+                        {
+                            "name": "Gyges - Random VS Greedy",
+                            "player1": RandomGygesPlayer("Random 1"),
+                            "player2": GreedyGygesPlayer("Greedy 1")
+                        }
+                    ]
+
+                elif opc == 3:
+                    num_iterations = int(input("\nNº de interações: "))
+                    gyges_simulations = [
+                        {
+                            "name": "Gyges - Random VS Minimax",
+                            "player1": RandomGygesPlayer("Human 1"),
+                            "player2": MinimaxGygesPlayer("Minimax 1")
+                        }
+                    ]
+
+                elif opc == 4:
+                    print()
+
+                elif opc == 0:
+                    print("\nAdeus!!")
+
+            elif opc == 2:
+                print("\nGreedy")
+                print_ai_menu()
+
+                print('Escolha uma opção: ', end='')
+                opc = int(input())
+
+                if opc == 1:
+                    num_iterations = int(input("\nNº de interações: "))
+                    gyges_simulations = [
+                        {
+                            "name": "Gyges - Greedy VS Random",
+                            "player1": GreedyGygesPlayer("Greedy 1"),
+                            "player2": RandomGygesPlayer("Random 1")
+                        }
+                    ]
+
+                elif opc == 2:
+                    num_iterations = int(input("\nNº de interações: "))
+                    gyges_simulations = [
+                        {
+                            "name": "Gyges - Greedy VS Greedy",
+                            "player1": GreedyGygesPlayer("Greedy 1"),
+                            "player2": GreedyGygesPlayer("Greedy 2")
+                        }
+                    ]
+
+                elif opc == 3:
+                    num_iterations = int(input("\nNº de interações: "))
+                    gyges_simulations = [
+                        {
+                            "name": "Gyges - Greedy VS Minimax",
+                            "player1": GreedyGygesPlayer("Greedy 1"),
+                            "player2": MinimaxGygesPlayer("Minimax 1")
+                        }
+                    ]
+
+                elif opc == 4:
+                    print()
+
+                elif opc == 0:
+                    print("\nAdeus!!")
+
+            elif opc == 3:
+
+                print("\nMinimax")
+                print_ai_menu()
+
+                print('Escolha uma opção: ', end='')
+                opc = int(input())
+
+                if opc == 1:
+                    num_iterations = int(input("\nNº de interações: "))
+                    gyges_simulations = [
+                        {
+                            "name": "Gyges - Minimax VS Random",
+                            "player1": MinimaxGygesPlayer("Minimax 1"),
+                            "player2": RandomGygesPlayer("Random 1")
+                        }
+                    ]
+
+                elif opc == 2:
+                    num_iterations = int(input("\nNº de interações: "))
+                    gyges_simulations = [
+                        {
+                            "name": "Gyges - Minimax VS Greedy",
+                            "player1": MinimaxGygesPlayer("Minimax 1"),
+                            "player2": GreedyGygesPlayer("Greedy 1")
+                        }
+                    ]
+
+                elif opc == 3:
+                    num_iterations = int(input("\nNº de interações: "))
+                    gyges_simulations = [
+                        {
+                            "name": "Gyges - Minimax VS Minimax",
+                            "player1": MinimaxGygesPlayer("Minimax 1"),
+                            "player2": MinimaxGygesPlayer("Minimax 2")
+                        }
+                    ]
+
+                elif opc == 4:
+                    print()
+
+                elif opc == 0:
+                    print("\nAdeus!!")
+
+            elif opc == 4:
+                print()
+
+            elif opc == 0:
+                print("\nAdeus!!")
+
+        elif opc == 0:
+            print("\nAdeus!!")
+
+        if opc != 0 or opc != 4:
+            for sim in gyges_simulations:
+                run_simulation(sim["name"], GygesSimulator(sim["player1"], sim["player2"]), num_iterations)
 
 
 if __name__ == "__main__":
@@ -86,8 +296,7 @@ if __name__ == "__main__":
      x  x  x  x  x  x 	4
      x  x  x  x  x  x 	5
      x  x  x  x  x  x 	6
-             x       	7
-      	 
+             x       	7	 
     Para a IA remover os moves obliquos e mudar a cena para verificar o win state
     Tmb a cena de blocked moves
     
@@ -97,4 +306,3 @@ if __name__ == "__main__":
     Alterar a cena para a IA saber quasi sao as pecas dela
     
     """
-

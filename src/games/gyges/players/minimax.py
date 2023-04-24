@@ -92,7 +92,6 @@ class MinimaxGygesPlayer(GygesPlayer):
             return {
                 GygesResult.WIN: 40,
                 GygesResult.LOOSE: -40,
-                GygesResult.DRAW: 0
             }[state.get_result(self.get_current_pos())]
 
         # if we reached the maximum depth, we will return the value of the heuristic

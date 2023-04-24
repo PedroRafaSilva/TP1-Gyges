@@ -1,7 +1,5 @@
 from typing import Optional
 
-
-
 from games.gyges.piece import Piece
 from src.games.gyges.action import GygesAction
 from src.games.gyges.result import GygesResult
@@ -39,7 +37,7 @@ class GygesState(State):
         self.__num_cols = col
 
         # Numero de jogadas sem se mover
-        self.not_move100 = 0
+        self.cannot_move100 = 0
 
         """
         the grid
@@ -61,18 +59,17 @@ class GygesState(State):
         """
         self.__has_winner = False
 
-
-    def get_closest_piece(self):
-        for row in range(0, self.__num_rows):
-            for col in range(0,self.__num_cols):
-                if self.__grid[row][col] != -1:
-                    return row
-
-    def get_away_piece(self):
-        for row in reversed(range(0, self.__num_rows)):
-            for col in reversed(range(0, self.__num_cols)):
-                if self.__grid[row][col] != -1:
-                    return row
+    def get_closest_playable_row(self):
+        if self.__acting_player == 0:
+            for row in range(0, self.__num_rows):
+                for col in range(0, self.__num_cols):
+                    if self.__grid[row][col] != -1:
+                        return row
+        if self.__acting_player == 1:
+            for row in reversed(range(0, self.__num_rows)):
+                for col in range(0, self.__num_cols):
+                    if self.__grid[row][col] != -1:
+                        return row
 
     # Retorna o nº do turno
     def get_turn(self):
@@ -85,10 +82,10 @@ class GygesState(State):
             return False
         return True
 
-    def __check_winner(self, player):
-       if self.__grid[7][2] != -1 or self.__grid[0][2] != -1:
+    def __check_winner(self):
+        if self.__grid[7][2] != -1 or self.__grid[0][2] != -1:
             return True
-       return False
+        return False
 
     def get_grid(self):
         return self.__grid
@@ -96,10 +93,10 @@ class GygesState(State):
     def get_num_players(self):
         return 2
 
-    #isto está meio inutilizado, serve só para verificar se ao colocar as peças, estas são colocadas no sítio certo.
+    # isto está meio inutilizado, serve só para verificar se ao colocar as peças, estas são colocadas no sítio certo.
     def validate_action(self, action: GygesAction) -> bool:
         if not self.start_game():
-            #dar valor as variaveis que vao ser usadas
+            # dar valor as variaveis que vao ser usadas
             col = action.get_col()
             row = action.get_row()
         else:
@@ -108,12 +105,12 @@ class GygesState(State):
             row = action.get_col()[0]
 
         # Se o jogador estiver bloqueado muda de jogador
-        self.not_move100 += 1
-        if self.not_move100 == 100:
-            self.not_move100 = 0
+        self.cannot_move100 += 1
+        if self.cannot_move100 == 100:
+            self.cannot_move100 = 0
             self.__acting_player = 1 if self.__acting_player == 0 else 0
 
-        ## verificar se a posição da peça está certa
+        # verificar se a posição da peça está certa
         # valid column
         if col < 0 or col > self.__num_cols:
             return False
@@ -126,10 +123,8 @@ class GygesState(State):
 
         return True
 
-
-
     def update(self, action: GygesAction):
-        #obter o valor das variaveis
+        # obter o valor das variaveis
         col = action.get_col()
         row = action.get_row()
 
@@ -144,9 +139,8 @@ class GygesState(State):
             # a posição antiga fica vazia
             self.__grid[row[0]][row[1]] = self.EMPTY_CELL
 
-
         # determine if there is a winner
-        self.__has_winner = self.__check_winner(self.__acting_player)
+        self.__has_winner = self.__check_winner()
 
         # switch to next player
         self.__acting_player = 1 if self.__acting_player == 0 else 0
@@ -178,7 +172,7 @@ class GygesState(State):
         # tela do jogo
         self.__display_numbers()
         for row in range(0, self.__num_rows):
-            print(color.PINK + "| " + str(row) + " "  + color.END, end="")
+            print(color.PINK + "| " + str(row) + " " + color.END, end="")
             for col in range(0, self.__num_cols):
                 if row == 0 or row == 7:
                     if col == 0:
@@ -223,8 +217,7 @@ class GygesState(State):
     def __is_full(self):
         return self.__turns_count > (self.__num_cols * self.__num_rows)
 
-
-    #usamos para verificar se o jogo esta acabado ou não
+    # usamos para verificar se o jogo está acabado ou não
     def is_finished(self) -> bool:
         return self.__has_winner
 
@@ -262,7 +255,7 @@ class GygesState(State):
             lambda action: self.validate_action(action),
             map(
                 lambda pos: GygesAction(pos[0], pos[1]),
-                [(i, j) for i in range(self.get_dimensions()) for j in range(self.get_dimensions())]
+                [(i, j) for i in range(self.get_num_rows()) for j in range(self.get_num_cols())]
             )
         ))
 
