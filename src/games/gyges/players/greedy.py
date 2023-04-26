@@ -36,7 +36,6 @@ class GreedyGygesPlayer(GygesPlayer):
                 option = 0
                 ative_option1 = ative_option2 = ative_option3 = ative_option4 = False
                 if state.get_turn() > 12:  # Se as peças estiverem todas colocadas
-
                     row = state.get_closest_playable_row()
                     pieces = get_playable_pieces(state, row)
                     col = pieces[0][1]

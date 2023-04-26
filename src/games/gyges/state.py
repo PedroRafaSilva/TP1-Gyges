@@ -104,6 +104,7 @@ class GygesState(State):
             col = action.get_col()[1]
             row = action.get_col()[0]
 
+
         # Se o jogador estiver bloqueado muda de jogador
         self.cannot_move100 += 1
         if self.cannot_move100 == 100:
@@ -263,3 +264,4 @@ class GygesState(State):
         new_state = self.clone()
         new_state.play(action)
         return new_state
+

@@ -1,4 +1,5 @@
 from src.games.game_simulator import GameSimulator
+import sys
 
 from src.games.gyges.players.human import HumanGygesPlayer
 from src.games.gyges.players.greedy import GreedyGygesPlayer
@@ -64,14 +65,15 @@ def main():
                     "player2": HumanGygesPlayer("Human 2")
                 }
             ]
+
         if opc == 2:
 
             print_ai_menu()
 
             print('Escolha uma opção: ', end='')
-            opc = int(input())
+            opc2 = int(input())
 
-            if opc == 1:
+            if opc2 == 1:
                 num_iterations = int(input("\nNº de interações: "))
                 gyges_simulations = [
                     {
@@ -81,7 +83,7 @@ def main():
                     }
                 ]
 
-            elif opc == 2:
+            elif opc2 == 2:
                 num_iterations = int(input("\nNº de interações: "))
                 gyges_simulations = [
                     {
@@ -91,7 +93,7 @@ def main():
                     }
                 ]
 
-            elif opc == 3:
+            elif opc2 == 3:
                 num_iterations = int(input("\nNº de interações: "))
                 gyges_simulations = [
                     {
@@ -101,7 +103,7 @@ def main():
                     }
                 ]
 
-            elif opc == 4:
+            elif opc2 == 4:
                 print()
 
         if opc == 3:
@@ -144,16 +146,13 @@ def main():
                     gyges_simulations = [
                         {
                             "name": "Gyges - Random VS Minimax",
-                            "player1": RandomGygesPlayer("Human 1"),
+                            "player1": RandomGygesPlayer("Random 1"),
                             "player2": MinimaxGygesPlayer("Minimax 1")
                         }
                     ]
 
                 elif opc == 4:
                     print()
-
-                elif opc == 0:
-                    print("\nAdeus!!")
 
             elif opc == 2:
                 print("\nGreedy")
@@ -194,9 +193,6 @@ def main():
 
                 elif opc == 4:
                     print()
-
-                elif opc == 0:
-                    print("\nAdeus!!")
 
             elif opc == 3:
 
@@ -239,21 +235,19 @@ def main():
                 elif opc == 4:
                     print()
 
-                elif opc == 0:
-                    print("\nAdeus!!")
-
             elif opc == 4:
                 print()
 
             elif opc == 0:
-                print("\nAdeus!!")
+                print("\n\nAdeus!!")
 
-        elif opc == 0:
-            print("\nAdeus!!")
 
-        if opc != 0 or opc != 4:
+
+        if opc != 0 and opc != 4:
             for sim in gyges_simulations:
                 run_simulation(sim["name"], GygesSimulator(sim["player1"], sim["player2"]), num_iterations)
+                num_iterations = 0
+
 
 
 if __name__ == "__main__":
