@@ -78,12 +78,13 @@ def get_moves(state: GygesState, row, col):
         if can_move:  # Se for possivel mover a peça
 
             """"
-            Por vezes, algumas jogadas eram repetidas.
+            Por vezes, algumas jogadas são repetidas.
             Por exemplo, o jogador 0, jogava a peça mais perto e depois essa peça passava a ser a peça mais perto
             do jogador 1 e ficavam sempre a mover a mesma peça infinitamente.
             Ao escolher um movimento aleatório, o jogo continua.
-            A condição garante que a cada turno didivisivel por 250, isso acontece.
-            Foi escolhido este número para evitar problemas com outras jogadas melhores.
+            A condição garante que a cada turno divisivel por 250, isso acontece.
+            Foi escolhido este número para evitar problemas com outras jogadas melhores, 
+            uma vez que um jogo raramente tem mais que 250 movimentos.
             """
             if state.get_turn() % 250 == 0:
                 option = randint(1, 4)
@@ -215,6 +216,9 @@ class MinimaxGygesPlayer(GygesPlayer):
                 GygesResult.LOOSE: -40,
             }[state.get_result(self.get_current_pos())]
         else:
+            """
+            O valor do estado do jogo será maior, quento mais perto as peças do jogador estiverem da casa de vitória
+            """
             distance = 0
             if state.get_acting_player() == 0:
                 row = state.get_closest_playable_row()
@@ -222,6 +226,10 @@ class MinimaxGygesPlayer(GygesPlayer):
                     if state.get_grid()[row][col] != -1:
                         distance += abs(7 - row) + abs(2 - col)
             else:
+                """
+                 O valor do estado do jogo será menor, quento mais perto as peças do jogador adversário
+                 estiverem da casa de vitória
+                """
                 row = state.get_closest_playable_row()
                 for col in range(0, state.get_num_cols()):
                     if state.get_grid()[row][col] != -1:
