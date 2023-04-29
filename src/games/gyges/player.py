@@ -1,5 +1,6 @@
 from abc import ABC
 
+from games.gyges.state import Color
 from src.games.gyges.result import GygesResult
 from src.games.player import Player
 
@@ -23,9 +24,9 @@ class GygesPlayer(Player, ABC):
 
     def print_stats(self):
         num_wins = self.__stats[GygesResult.WIN]
-        print(
-            f"Player {self.get_name()}: {num_wins}/{self.__num_games} wins ({num_wins * 100.0 / self.__num_games} win "
-            f"rate)")
+        print(Color.GREEN +
+              f"Player {self.get_name()}: {num_wins}/{self.__num_games} wins ({num_wins * 100.0 / self.__num_games} "
+              f"win rate)" + Color.END)
 
     def event_new_game(self):
         self.__num_games += 1

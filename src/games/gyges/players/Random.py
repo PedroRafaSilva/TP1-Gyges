@@ -15,22 +15,28 @@ class RandomGygesPlayer(GygesPlayer):
         while True:
             # noinspection PyBroadException
             try:
+
                 option = row = col = 0
                 proceed = False
                 ative_option1 = ative_option2 = ative_option3 = ative_option4 = False
+
                 if state.get_turn() > 12:  # Se as peças estiverem todas colocadas
-                    while not proceed:  # Enqaunto não for escolhida a/as peça(s) mais próxima(s)
+
+                    while not proceed:  # Enqaunto não for escolhida a(s) peça(s) mais próxima(s)
+
                         row = randint(1, 6)
                         col = randint(0, 5)
 
                         # Se o jogador 0 escolher o campo com uma peça mais próxima dele, continua
                         if state.get_acting_player() == 0 and row == state.get_closest_playable_row() and \
                                 state.get_grid()[row][col] != -1:
+
                             proceed = True
 
                         # Se o jogador 1 escolher o campo com uma peça mais próxima dele, continua
                         elif state.get_acting_player() == 1 and row == state.get_closest_playable_row() and \
                                 state.get_grid()[row][col] != -1:
+
                             proceed = True
 
                         # Caso contrário volta a escolher a linha e a coluna da peça a jogar
@@ -38,16 +44,19 @@ class RandomGygesPlayer(GygesPlayer):
                             proceed = False
 
                     old_pos = [row, col]  # Posição anterior da peça
-                    moves = state.get_grid()[row][col]  # O nº de movimentos é igual ao tipo de peça escolhido
+                    moves = state.get_grid()[row][col]  # O número de movimentos é igual ao tipo de peça escolhido
 
                     while moves != 0:  # Enquanto houver movimentos
                         can_move = False
+
                         if state.get_acting_player() == 0:  # Apenas o jogador 0 pode mover a peça para baixo
+
                             """Se a linha abaixo da peça for diferente da coluna 7 e estiver vazia ou só restar 1 
                             movimento Ou se a peça estiver nas colunas á beira da casa vencedora"""
                             if row + 1 != 7 and (state.get_grid()[row + 1][col] == -1 or (
                                     state.get_grid()[row + 1][col] != -1 and moves == 1)) or \
                                     (row + 1 == 7 and 2 <= col <= 3 and moves == 1):
+
                                 ative_option1 = True
                                 can_move = True
 
@@ -55,6 +64,7 @@ class RandomGygesPlayer(GygesPlayer):
                         e diferente de 0 ou a coluna da esquerda estiver ocupada mas for o ultimo movimento da peça"""
                         if option != 3 and (col != 0 and (state.get_grid()[row][col - 1] == -1 or
                                                           (state.get_grid()[row][col - 1] != -1 and moves == 1))):
+
                             can_move = True
                             ative_option2 = True
 
@@ -62,15 +72,18 @@ class RandomGygesPlayer(GygesPlayer):
                         e diferente de 5 ou a coluna da direita estiver ocupada mas for o ultimo movimento da peça"""
                         if option != 2 and (col != 5 and (state.get_grid()[row][col + 1] == -1 or (
                                 state.get_grid()[row][col + 1] != -1 and moves == 1))):
+
                             can_move = True
                             ative_option3 = True
 
                         if state.get_acting_player() == 1:  # Apenas o jogador 1 pode mover a peça para cima
+
                             """Se a linha acima da peça for diferente da coluna 0 e estiver vazia ou só restar 1 
                             movimento Ou se a peça estiver nas colunas á beira da casa vencedora"""
                             if row - 1 != 0 and (state.get_grid()[row - 1][col] == -1 or (
                                     state.get_grid()[row - 1][col] != -1 and moves == 1)) or \
                                     (row - 1 == 0 and 2 <= col <= 3 and moves == 1):
+
                                 can_move = True
                                 ative_option4 = True
 
@@ -78,46 +91,56 @@ class RandomGygesPlayer(GygesPlayer):
 
                             option = randint(1, 4)
 
-                            # Se a optionção escolhida for 1 e esta optionção estiver disponivel
+                            # Se a optionção escolhida for 1 e esta opção estiver disponivel
                             if option == 1 and ative_option1:
+
                                 if row == 6 and col == 3:  # Permite o jogador aceder á casa vencedora através da col 3
                                     col -= 1
+
                                 row += 1
                                 # Se calhar na casa de outra peça fica com os movimentos dessa peça
                                 if state.get_grid()[row][col] != -1:
                                     moves += state.get_grid()[row][col]
+
                                 # A nova posição fica com o valor da peça e a anterior fica vazia
                                 state.get_grid()[row][col] = state.get_grid()[row - 1][col]
                                 state.get_grid()[row - 1][col] = state.EMPTY_CELL
 
-                            # Se a optionção escolhida for 2 e esta optionção estiver disponivel
+                            # Se a optionção escolhida for 2 e esta opção estiver disponivel
                             elif option == 2 and ative_option2:
                                 col -= 1
+
                                 # Se calhar na casa de outra peça fica com os movimentos dessa peça
                                 if state.get_grid()[row][col] != -1:
                                     moves += state.get_grid()[row][col]
+
                                 # A nova posição fica com o valor da peça e a anterior fica vazia
                                 state.get_grid()[row][col] = state.get_grid()[row][col + 1]
                                 state.get_grid()[row][col + 1] = state.EMPTY_CELL
 
-                            # Se a optionção escolhida for 3 e esta optionção estiver disponivel
+                            # Se a optionção escolhida for 3 e esta opção estiver disponivel
                             elif option == 3 and ative_option3:
                                 col += 1
+
                                 # Se calhar na casa de outra peça fica com os movimentos dessa peça
                                 if state.get_grid()[row][col] != -1:
                                     moves += state.get_grid()[row][col]
+
                                 # A nova posição fica com o valor da peça e a anterior fica vazia
                                 state.get_grid()[row][col] = state.get_grid()[row][col - 1]
                                 state.get_grid()[row][col - 1] = state.EMPTY_CELL
 
-                            # Se a optionção escolhida for 4 e esta optionção estiver disponivel
+                            # Se a optionção escolhida for 4 e esta opção estiver disponivel
                             elif option == 4 and ative_option4:
+
                                 if row == 1 and col == 3:  # Permite o jogador aceder á casa vencedora através da col 3
                                     col -= 1
+
                                 row -= 1
                                 # Se calhar na casa de outra peça fica com os movimentos dessa peça
                                 if state.get_grid()[row][col] != -1:
                                     moves += state.get_grid()[row][col]
+
                                 # A nova posição fica com o valor da peça e a anterior fica vazia
                                 state.get_grid()[row][col] = state.get_grid()[row + 1][col]
                                 state.get_grid()[row + 1][col] = state.EMPTY_CELL
@@ -130,8 +153,8 @@ class RandomGygesPlayer(GygesPlayer):
 
                         else:  # Se a peça não possa ser movida
 
-                            # São colocados este valores para que o validate_action retorne false
-                            # E o jogador tenha outra chance
+                            # São colocados estes valores para que o validate_action retorne false
+                            # E o jogador tenha outra hipotese
                             row = -1
                             col = -1
                             moves = 0
@@ -141,8 +164,10 @@ class RandomGygesPlayer(GygesPlayer):
                     return GygesAction(old_pos, new_pos)
 
                 else:
+
                     # O jogador 0 irá ficar com a parte de cima do tabuleiro
                     if state.get_acting_player() == 0:
+
                         return GygesAction(1, randint(0, 5))
 
                     else:

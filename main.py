@@ -1,6 +1,5 @@
+from games.gyges.state import Color
 from src.games.game_simulator import GameSimulator
-import sys
-
 from src.games.gyges.players.human import HumanGygesPlayer
 from src.games.gyges.players.greedy import GreedyGygesPlayer
 from src.games.gyges.players.minimax import MinimaxGygesPlayer
@@ -9,17 +8,17 @@ from src.games.gyges.simulator import GygesSimulator
 
 
 def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
-    print(f"----- {desc} -----")
+    print(Color.GREEN + f"\n----- {desc} -----" + Color.END)
 
     for i in range(0, iterations):
         # simulator.change_player_positions()
         simulator.run_simulation()
-    print("Results for the game:")
+    print(Color.GREEN + "Results for the game:" + Color.END)
     simulator.print_stats()
 
 
 def print_main_menu():
-    print('\033[1;m\n-------------------------------------')
+    print(Color.BLUE + '\n-------------------------------------')
     print('--- Gyges Game                    ---')
     print('-------------------------------------')
     print('--- 1 - Humano vs Humano          ---')
@@ -27,11 +26,11 @@ def print_main_menu():
     print('--- 3 - AI vs AI                  ---')
     print('-------------------------------------')
     print('--- 0 - Sair                      ---')
-    print('-------------------------------------')
+    print('-------------------------------------' + Color.END)
 
 
 def print_ai_menu():
-    print('\n-------------------------------------')
+    print(Color.YELLOW + '\n-------------------------------------')
     print('--- Seleção da IA                 ---')
     print('-------------------------------------')
     print('--- 1 - Random                    ---')
@@ -40,7 +39,7 @@ def print_ai_menu():
     print('-------------------------------------')
     print('--- 4 - Voltar Atrás              ---')
     print('--- 0 - Sair                      ---')
-    print('-------------------------------------')
+    print('-------------------------------------' + Color.END)
 
 
 def main():
@@ -241,13 +240,10 @@ def main():
             elif opc == 0:
                 print("\n\nAdeus!!")
 
-
-
         if opc != 0 and opc != 4:
             for sim in gyges_simulations:
                 run_simulation(sim["name"], GygesSimulator(sim["player1"], sim["player2"]), num_iterations)
                 num_iterations = 0
-
 
 
 if __name__ == "__main__":

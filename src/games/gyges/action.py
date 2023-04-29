@@ -9,5 +9,3 @@ class GygesAction:
 
     def get_row(self):
         return self.__row
-
-
