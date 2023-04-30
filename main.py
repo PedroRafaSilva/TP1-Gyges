@@ -18,7 +18,7 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
 
 
 def print_main_menu():
-    print(Color.BLUE + '\n-------------------------------------')
+    print('\n-------------------------------------')
     print('--- Gyges Game                    ---')
     print('-------------------------------------')
     print('--- 1 - Humano vs Humano          ---')
@@ -26,11 +26,11 @@ def print_main_menu():
     print('--- 3 - AI vs AI                  ---')
     print('-------------------------------------')
     print('--- 0 - Sair                      ---')
-    print('-------------------------------------' + Color.END)
+    print('-------------------------------------')
 
 
 def print_ai_menu():
-    print(Color.YELLOW + '\n-------------------------------------')
+    print('\n-------------------------------------')
     print('--- Seleção da IA                 ---')
     print('-------------------------------------')
     print('--- 1 - Random                    ---')
@@ -39,7 +39,7 @@ def print_ai_menu():
     print('-------------------------------------')
     print('--- 4 - Voltar Atrás              ---')
     print('--- 0 - Sair                      ---')
-    print('-------------------------------------' + Color.END)
+    print('-------------------------------------')
 
 
 def main():

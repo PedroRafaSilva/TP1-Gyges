@@ -8,7 +8,36 @@ class HumanGygesPlayer(GygesPlayer):
     def __init__(self, name):
         super().__init__(name)
 
+    def game_rules(self):
+        option = 0
+        while option != 1:
+            print("-------------------------Regras do jogo-----------------------")
+            print("- O tabuleiro inicia vazio.")
+            print("- Existem 2 jogadores.")
+            print("- Cada jogador tem 6 peças de cada nível "
+                  "(2 peças de 3 níveis, 2 peças de 2 níveis e 2 peças de 1 nível).")
+            print("- Cada jogador só pode movimentar a peça mais próxima de si.")
+            print("- As peças só podem ser movimentadas na vertical e na horizontal.")
+            print("- Não há movimentos diagonais neste jogo.")
+            print("- As peças devem obrigatoriamente, percorrer o número de casas correspondente ao seu nível.")
+            print("- As peças podem transitar sobre outras peças.")
+            print("- As peças não podem saltar casas.")
+            print("- Não se pode passar duas vezes pela mesma casa.")
+            print("- As peças podem encerrar a sua jogada sobre outra peça onde podem adquirir a quantidade de "
+                  "movimentos da peça em que está abaixo e continuar o movimento.")
+            print("- As casas da vitória só podem ser alcançadas pelas 2 casas que fazem vizinhança com esta, assim,\n "
+                  "a casa da vitória do jogador 1, só pode ser alcançada a partir das casas (0,2) e (0,3) e a casa da\n"
+                  "vitória do jogador 2, só pode ser alcançada a partir das casas (7,2) e (7,3).")
+            print("- O jogo termina quando um jogador não consegue encontrar nenhuma maneira de impedir a vitória "
+                  "do seu adversário.")
+            print("\nContinuar?")
+            print("1 - Sim   0 - Não")
+            option = int(input("Opção: "))
+
     def get_action(self, state: GygesState):
+        if state.get_turn() == 1:
+            self.game_rules()
+        print("\n")
         state.display()
         while True:
             # noinspection PyBroadException
@@ -44,7 +73,8 @@ class HumanGygesPlayer(GygesPlayer):
                         else:
 
                             proceed = False
-                            print(Color.RED + "Choose a piece that is closest to you!!!" + Color.END)
+                            print(Color.RED + f"Choose a piece that is in the row number: "
+                                              f"{state.get_closest_playable_row()}!!!" + Color.END)
                             state.display()
 
                     old_pos = [row, col]  # Posição anterior da peça
@@ -53,7 +83,7 @@ class HumanGygesPlayer(GygesPlayer):
                     while moves != 0:  # Enquanto houver movimentos
 
                         can_move = False
-                        print("\nMovimentos")
+                        print("\nMovements")
 
                         if state.get_acting_player() == 0:  # Apenas o jogador 0 pode mover a peça para baixo
                             """
@@ -63,7 +93,7 @@ class HumanGygesPlayer(GygesPlayer):
                             if row + 1 != 7 and (state.get_grid()[row + 1][col] == -1 or moves == 1) or \
                                     (row + 1 == 7 and 2 <= col <= 3 and moves == 1):
 
-                                print("1 - Para baixo")
+                                print("1 - Down")
                                 ative1 = True
                                 can_move = True
 
@@ -72,7 +102,7 @@ class HumanGygesPlayer(GygesPlayer):
                         e diferente de 0 ou a coluna da esquerda estiver ocupada mas for o ultimo movimento da peça
                         """
                         if op != 3 and col != 0 and (state.get_grid()[row][col - 1] == -1 or moves == 1):
-                            print("2 - Para a esquerda")
+                            print("2 - Left")
 
                             can_move = True
                             ative2 = True
@@ -83,7 +113,7 @@ class HumanGygesPlayer(GygesPlayer):
                         """
                         if op != 2 and col != 5 and (state.get_grid()[row][col + 1] == -1 or moves == 1):
 
-                            print("3 - Para a direita")
+                            print("3 - Right")
                             can_move = True
                             ative3 = True
 
@@ -95,14 +125,14 @@ class HumanGygesPlayer(GygesPlayer):
                             if op != 1 and row - 1 != 0 and (state.get_grid()[row - 1][col] == -1 or moves == 1) or \
                                     (row - 1 == 0 and 2 <= col <= 3 and moves == 1):
 
-                                print("4 - Para cima")
+                                print("4 - Up")
                                 can_move = True
                                 ative4 = True
 
                         if can_move:  # Se for possivel mover a peça
 
-                            print("\nNº de movimentos restantes: " + str(moves))
-                            op = int(input("Quer mover esta peça para onde: "))
+                            print("\nNº of movements left: " + str(moves))
+                            op = int(input("Where do you want to move this piece?: "))
 
                             if op == 1 and ative1:  # Se a opção escolhida for 1 e esta opção estiver disponivel
 
